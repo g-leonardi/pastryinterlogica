@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head lang="en">
+    <meta charset="utf-8"/>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta
+            name="description"
+            content="Web site created using spring init"
+    />
+    <link rel="apple-touch-icon" th:href="@{/img/logo192.png}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+    <title>La pasticceria di Luana e Maria</title>
+    <script src="https://kit.fontawesome.com/c3da382ec3.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{/css/materialize.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bakery.css}"/>
+</head>
+
+<body>
+<!-- Compiled and minified JavaScript -->
+<script th:src="@{/js/jQuery.js}" type="text/javascript"></script>
+<script th:src="@{/js/materialize.js}" type="text/javascript"></script>
+<script th:src="@{/js/jquery.validate.min.js}" type="text/javascript"></script>
+
+<div class="main">
+
+    <nav class="bakery-background navbar-fixed">
+        <div class="myNavbar">
+            <a href="#" class="brand-logo">La pasticceria di Luana e Maria</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a th:href="@{/pastry/managePastry}">Gestione dei Dolci</a></li>
+                <li><a th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col s12">
+            <div class="parallax-container">
+                <div class="parallax"><img th:src="@{/img/pasticceria.jpg}"></div>
+            </div>
+            <div class="section white">
+                <div class="row">
+                    <h2 class="header center-align">Le specialità di oggi</h2>
+                    <p class="grey-text text-darken-3 lighten-3">
+                        QUI METTIAMO LE SPECIALITÀ CON CLICK
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<script>
+     $(document).ready(function(){
+        $('.parallax').parallax();
+        $('.sidenav').sidenav();
+      });
+
+
+
+</script>
+
+</body>
+</html>

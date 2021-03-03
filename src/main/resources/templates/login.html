@@ -1,0 +1,83 @@
+
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="apple-touch-icon" th:href="@{/img/logo192.png}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <title>Spring + React Template</title>
+    <script src="https://kit.fontawesome.com/c3da382ec3.js" crossorigin="anonymous"></script>
+</head>
+<body class="themeBody">
+
+<div class="container">
+    <div class="row" style="width: 100%">
+        <div class="row" th:if="${error}">
+            <div class="col offset-md-3">
+                <div class="alert alert-danger" role="alert" style="width: 500px">
+                    Invalid username or password
+                </div>
+            </div>
+        </div>
+        <div class="row" th:if="${logout}">
+            <div class="col offset-md-3">
+                <div class="alert alert-primary" role="alert" style="width: 500px">
+                    Sucessfully logout!
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-md-3">
+            <form name='formLogin' action="login" method='POST' class="formLogin">
+
+                <div class="row" style="margin-bottom: 15px">
+                    <input type="text" name="username" placeholder="Username" aria-label="Username">
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+                    <input type="password" name="password" placeholder="Password" aria-label="Password">
+                </div>
+                <div class="row" style="margin-bottom: 15px">
+                    <div class="col-md-3 offset-md-8">
+                        <label class="form-check-label" for="remember-me" style="color: white;">
+                            Remember me
+                        </label>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="customCheckBox" id="checkBoxContainer" onclick="javascript:updateRememberMe()">
+                            <div id="checkBox"
+                                 style="background-color: #6289B0; width: 100%; height: 100%; display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="checkbox" id="remember-me" name="remember-me" style="display:none;">
+                <div class="row" style="margin-bottom: 15px">
+                    <button type="submit" name="submit" class="btn btn-primary btn-login">LOGIN</button>
+                </div>
+
+            </form>
+        </div>
+        </div>
+    </div>
+    <script>
+    function updateRememberMe(){
+         var checkBox = document.getElementById("checkBox");
+          if (checkBox.style.display === "none") {
+            checkBox.style.display = "block";
+          } else {
+            checkBox.style.display = "none";
+          }
+         var rememberMe = document.getElementById("remember-me");
+         rememberMe.checked = !rememberMe.checked
+    }
+
+
+    </script>
+
+</body>
+</html>
+
