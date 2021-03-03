@@ -4,7 +4,7 @@
         <form id="ingredient-form" th:object="${ingredient}" method="post" name="ingredientForm" th:action="@{/pastry/saveRecipe}"
               class="col s12 needs-validation" novalidate="novalidate">
             <input type="hidden" id="id"  th:field="*{id}" th:value="*{id}"/>
-            <input type="hidden" id="pastryId"  th:value="${pastryId}"/>
+            <input type="hidden" id="parentPastry" th:field="*{parentPastry}" th:value="*{parentPastry}"/>
             <div class="row">
                 <div class="input-field col s12">
                     <label for="name" class="" th:classappend="${ingredient.name} ? active : _ " th:text="Nome+'*'"></label>

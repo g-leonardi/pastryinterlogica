@@ -2,6 +2,7 @@ package giuseppe.leonardi.pasticceria.webapp.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Pastry {
 
     private Long id;
     private String name;
+    @ToString.Exclude
     private List<Ingredient> recipe;
 
     @Id
@@ -22,7 +24,7 @@ public class Pastry {
         return id;
     }
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentPastry", fetch = FetchType.LAZY)
     public List<Ingredient> getRecipe() {
         return recipe;
     }

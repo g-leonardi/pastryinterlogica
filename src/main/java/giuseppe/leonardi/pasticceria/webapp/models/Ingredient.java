@@ -2,11 +2,9 @@ package giuseppe.leonardi.pasticceria.webapp.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -16,10 +14,17 @@ public class Ingredient {
     private String name;
     private long quantity;
     private Unit unit;
+    @ToString.Exclude
+    private Pastry parentPastry;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public Pastry getParentPastry() {
+        return parentPastry;
     }
 }

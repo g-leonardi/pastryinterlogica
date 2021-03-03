@@ -25,7 +25,8 @@ public class PastryController {
     @GetMapping({"/newPastry", "/editPastry"})
     public String getPastryModal(Model model, @RequestParam Optional<Long> pastryId){
         model.addAttribute("isNew", !pastryId.isPresent());
-        model.addAttribute("pastry", pastryId.isPresent() ? pastryService.getPastry(pastryId.get()) : new Pastry());
+        Pastry pastry = pastryId.isPresent() ?  pastryService.getPastry(pastryId.get()) : new Pastry();
+        model.addAttribute("pastry", pastry);
         return "pastryModal";
     }
 
@@ -37,14 +38,15 @@ public class PastryController {
 
     @GetMapping("/addRecipe")
     public String getRecipeModal(Model model, @RequestParam Optional<Long> pastryId){
-        model.addAttribute("pastryId", pastryId);
-        model.addAttribute("ingredient", new Ingredient());
+        Ingredient ingredient = new Ingredient();
+        ingredient.setParentPastry(pastryService.getPastry(pastryId.get()));
+        model.addAttribute("ingredient", ingredient);
         return "recipeModal";
     }
 
     @PostMapping("/saveRecipe")
-    public String saveRecipe(@ModelAttribute Ingredient Ingredient, @RequestParam Optional<Long> pastryId){
-
+    public String saveRecipe(@ModelAttribute Ingredient ingredient){
+        pastryService.saveIngredient(ingredient);
         return "redirect:/pastry/managePastry";
     }
 

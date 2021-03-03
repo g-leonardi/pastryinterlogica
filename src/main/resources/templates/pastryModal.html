@@ -12,6 +12,32 @@
                     <p class="error" th:each="error: ${#fields.errors('name')}" th:text="${error}">Validation error</p>
                 </div>
             </div>
+
+            <div th:if="${pastry.recipe}">
+                <h4>Lista degli ingredienti</h4>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Quantità</th>
+                        <th>Azioni</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="ingredient: ${pastry.recipe}">
+                        <td th:text="${ingredient.id}" />
+                        <td th:text="${ingredient.name}" />
+                        <td th:text="${ingredient.quantity} + ' ' + ${ingredient.unit.symbol}"/>
+                        <td>
+                            <a class="waves-effect waves-light btn red" th:onclick="|deletePastry(${pastry.id});|">Elimina</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
             <ul class="right hide-on-med-and-down" th:unless="${viewMode}">
                 <button type="button" class="btn btn-danger red" onclick="closeModal('#modalNewPastry');">Annulla</button>
                 <button type="button" class="btn btn-success pull-right green" onclick="submitForm();">Salva</button>
