@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div th:if="${pastry.recipe}">
+            <div th:if="${pastry.recipe!=null && !pastry.recipe.empty}">
                 <h4>Lista degli ingredienti</h4>
                 <table>
                     <thead>
@@ -31,7 +31,7 @@
                         <td th:text="${ingredient.name}" />
                         <td th:text="${ingredient.quantity} + ' ' + ${ingredient.unit.symbol}"/>
                         <td>
-                            <a class="waves-effect waves-light btn red" th:onclick="|deletePastry(${pastry.id});|">Elimina</a>
+                            <a class="waves-effect waves-light btn red" th:onclick="|deleteIngredient(${ingredient.id});|">Elimina</a>
                         </td>
                     </tr>
                     </tbody>
@@ -86,4 +86,22 @@ function submitForm(){
         document.pastryForm.submit();
          }
      }
+
+     function deleteIngredient(ingredientId){
+         $.ajax({
+            url: 'deleteIngredient/'+ingredientId,
+            type: 'DELETE',
+            contentType:'application/json',
+            dataType: 'text',
+            success: function(result) {
+                 $.ajax({
+                    url: "editPastry?pastryId="+$('input[name=id]').val(),
+                    success: function(data){
+                         $("#modalNewPastry").html(data);
+                         showModal('#modalNewPastry');
+                    }
+                })
+                }
+        });
+      }
 </script>

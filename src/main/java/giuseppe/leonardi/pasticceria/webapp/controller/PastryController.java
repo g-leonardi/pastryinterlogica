@@ -36,6 +36,13 @@ public class PastryController {
         return "redirect:/pastry/managePastry";
     }
 
+    @DeleteMapping("/deletePastry/{pastryId}")
+    @ResponseBody
+    public String deletePastry(@PathVariable("pastryId") Optional<Long> pastryId){
+        pastryService.deletePastry(pastryId);
+        return "ok";
+    }
+
     @GetMapping("/addRecipe")
     public String getRecipeModal(Model model, @RequestParam Optional<Long> pastryId){
         Ingredient ingredient = new Ingredient();
@@ -49,5 +56,13 @@ public class PastryController {
         pastryService.saveIngredient(ingredient);
         return "redirect:/pastry/managePastry";
     }
+
+    @DeleteMapping("/deleteIngredient/{ingredientId}")
+    @ResponseBody
+    public String deleteIngredient(@PathVariable("ingredientId") Optional<Long> ingredientId){
+        pastryService.deleteIngredient(ingredientId);
+        return "ok";
+    }
+
 
 }

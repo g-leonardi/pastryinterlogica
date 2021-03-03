@@ -124,6 +124,18 @@
             })
         }
 
+        function deletePastry(pastryId){
+         $.ajax({
+            url: 'deletePastry/'+pastryId,
+            type: 'DELETE',
+            contentType:'application/json',
+            dataType: 'text',
+            success: function(result) {
+                 location.reload()
+                }
+        });
+      }
+
      $(document).ready(function(){
         $('.sidenav').sidenav();
         $('.modal').modal();

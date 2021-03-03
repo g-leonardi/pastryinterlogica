@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PastryService {
@@ -30,5 +31,16 @@ public class PastryService {
 
     public void saveIngredient(Ingredient ingredient) {
         ingredientRepository.save(ingredient);
+    }
+
+    public void deleteIngredient(Optional<Long> ingredientId) {
+        Ingredient byId = ingredientRepository.findById(ingredientId.get()).get();
+        byId.setParentPastry(null);
+        ingredientRepository.delete(byId);
+    }
+
+    public void deletePastry(Optional<Long> pastryId) {
+        Pastry pastry = pastryRepository.findById(pastryId.get()).get();
+        pastryRepository.delete(pastry);
     }
 }
