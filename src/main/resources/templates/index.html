@@ -43,14 +43,40 @@
             </div>
             <div class="section white">
                 <div class="row">
-                    <h2 class="header center-align">Le specialità di oggi</h2>
-                    <p class="grey-text text-darken-3 lighten-3">
-                        QUI METTIAMO LE SPECIALITÀ CON CLICK
+                    <div th:if="${rows!=null && !rows.empty}" style="margin-left: 50px">
+                        <h2 class="header center-align">Le specialità di oggi</h2>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Quantità</th>
+                                <th>Prezzo</th>
+                                <th>Azioni</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="row: ${rows}">
+                                <td th:text="${row.name}" />
+                                <td th:text="${row.quantity}" />
+                                <td th:text="${row.price}"/>
+                                <td>
+                                    <a class="waves-effect waves-light btn red" th:onclick="|showRecipe(${row.pastryId});|">Elimina</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     </p>
                 </div>
             </div>
-
+            <div class="parallax-container">
+                <div class="parallax"><img th:src="@{/img/pasticceria.jpg}"></div>
+            </div>
         </div>
+    </div>
+
+    <div id="modalViewPastry" class="modal">
     </div>
 
 

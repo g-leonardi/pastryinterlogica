@@ -14,7 +14,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s6">
-                    <label for="quantity" class="" th:classappend="${ingredient.quantity} ? active : _ " th:text="Quantità+'*'"></label>
+                    <label for="quantity" class="" th:classappend="${ingredient.quantity!=null} ? active : _ " th:text="Quantità+'*'"></label>
                     <input type="text" id="quantity" th:field="*{quantity}" th:value="*{quantity}" required="required"/>
                     <p class="error" th:each="error: ${#fields.errors('quantity')}" th:text="${error}">Validation error</p>
                 </div>
@@ -25,7 +25,7 @@
                     </select>
                 </div>
             </div>
-            <ul class="right hide-on-med-and-down" th:unless="${viewMode}">
+            <ul class="right hide-on-med-and-down">
                 <button type="button" class="btn btn-danger red" onclick="closeModal('#modalNewPastry');">Annulla</button>
                 <button type="button" class="btn btn-success pull-right green" onclick="submitForm();">Aggiungi</button>
             </ul>

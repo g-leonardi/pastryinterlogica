@@ -1,0 +1,79 @@
+<div class="modal-content">
+    <h4>Metti in vendita il dolce</h4>
+    <div class="row">
+        <form id="sell-form" th:object="${sellPastry}" method="post" name="sellPastryForm" th:action="@{/pastry/saveSellPastry}"
+              class="col s12 needs-validation" novalidate="novalidate">
+            <input type="hidden" id="id"  th:field="*{id}" th:value="*{id}"/>
+            <input type="hidden" id="pastry" th:field="*{pastry}" th:value="*{pastry}"/>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" id="name"  th:value="*{pastry.name}" disabled/>
+                </div>
+                <div class="input-field col s6">
+                    <label for="quantity" class="" th:classappend="${sellPastry.quantity!=null} ? active : _ " th:text="Quantità+'*'"></label>
+                    <input type="text" id="quantity" th:field="*{quantity}" th:value="*{quantity}" required="required"/>
+                    <p class="error" th:each="error: ${#fields.errors('quantity')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="input-field col s6">
+                    <label for="price" class="" th:classappend="${sellPastry.price!=null} ? active : _ " th:text="Prezzo+'*'"></label>
+                    <input type="text" id="price" th:field="*{price}" th:value="*{price}" required="required"/>
+                    <p class="error" th:each="error: ${#fields.errors('price')}" th:text="${error}">Validation error</p>
+                </div>
+            </div>
+
+
+
+            <ul class="right hide-on-med-and-down">
+                <button type="button" class="btn btn-danger red" onclick="closeModal('#modalNewPastry');">Annulla</button>
+                <button type="button" class="btn btn-success pull-right green" onclick="submitForm();">Vendi</button>
+            </ul>
+        </form>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    $("form[id='sell-form']").validate({
+        rules: {
+            'quantity': {
+                    required: true,
+                    min: 1,
+                    number: true
+             },
+             'price': {
+                    required: true,
+                    min: 1,
+                    number: true
+             }
+        },
+        messages: {
+              'quantity': {
+                required: 'inserire un valore',
+                min: 'inserire un valore maggiore di zero',
+                number: 'inserire un numero'
+                },
+                 'price': {
+                required: 'inserire un valore',
+                min: 'inserire un valore maggiore di zero',
+                number: 'inserire un numero'
+                }
+              },
+        errorElement : 'div',
+        errorPlacement: function(error, element) {
+            var placement = $(element).data('error');
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+             }
+        }
+    });
+});
+
+function submitForm(){
+    if($("form[id='sell-form']").valid()){
+        closeModal('#modalSellPastry');
+        document.sellPastryForm.submit();
+         }
+     }
+</script>

@@ -1,7 +1,8 @@
 package giuseppe.leonardi.pasticceria.webapp.controller;
 
-import giuseppe.leonardi.pasticceria.webapp.models.Ingredient;
-import giuseppe.leonardi.pasticceria.webapp.models.Pastry;
+import giuseppe.leonardi.pasticceria.webapp.models.dao.Ingredient;
+import giuseppe.leonardi.pasticceria.webapp.models.dao.Pastry;
+import giuseppe.leonardi.pasticceria.webapp.models.dao.SellPastry;
 import giuseppe.leonardi.pasticceria.webapp.service.PastryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,6 +64,21 @@ public class PastryController {
         pastryService.deleteIngredient(ingredientId);
         return "ok";
     }
+
+    @GetMapping("/newSellPastry")
+    public String getNewSellPastryModal(Model model, @RequestParam Optional<Long> pastryId){
+        SellPastry sellPastry = new SellPastry();
+        sellPastry.setPastry(pastryService.getPastry(pastryId.get()));
+        model.addAttribute("sellPastry", sellPastry);
+        return "sellPastryModal";
+    }
+
+    @PostMapping("/saveSellPastry")
+    public String saveSellPastry(@ModelAttribute SellPastry sellPastry){
+        pastryService.saveSellPastry(sellPastry);
+        return "redirect:/pastry/managePastry";
+    }
+
 
 
 }

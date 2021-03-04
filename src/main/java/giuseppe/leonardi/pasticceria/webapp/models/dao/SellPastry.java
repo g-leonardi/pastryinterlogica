@@ -1,4 +1,4 @@
-package giuseppe.leonardi.pasticceria.webapp.models;
+package giuseppe.leonardi.pasticceria.webapp.models.dao;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,9 @@ import java.util.Date;
 public class SellPastry {
     private Long id;
     private int quantity;
+    private double price;
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date createDate;
     private Pastry pastry;
 

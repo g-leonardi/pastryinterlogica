@@ -1,4 +1,4 @@
-package giuseppe.leonardi.pasticceria.webapp.models;
+package giuseppe.leonardi.pasticceria.webapp.models.dao;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

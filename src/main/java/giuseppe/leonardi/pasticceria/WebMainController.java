@@ -1,5 +1,8 @@
 package giuseppe.leonardi.pasticceria;
 
+import giuseppe.leonardi.pasticceria.webapp.models.gui.TableRow;
+import giuseppe.leonardi.pasticceria.webapp.service.PastryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,14 +11,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class WebMainController {
-
+    @Autowired
+    private PastryService pastryService;
 
     @RequestMapping(value = { "/"})
-    public String index() {
+    public String index(Model model) {
+        List<TableRow> rows = pastryService.getAllSellPastries().stream().map(sellPastry -> {
+            Double price = pastryService.getPrice(sellPastry);
+            return new TableRow(sellPastry.getPastry().getName(), sellPastry.getQuantity(), price, sellPastry.getPastry().getId());
+        }).collect(Collectors.toList());
+        model.addAttribute("rows", rows);
         return "index";
     }
 

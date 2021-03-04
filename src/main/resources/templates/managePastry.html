@@ -124,6 +124,18 @@
             })
         }
 
+        function openSellModal(pastryId){
+            var action_url = "newSellPastry?pastryId="+pastryId
+
+            $.ajax({
+                url: action_url,
+                success: function(data){
+                     $("#modalSellPastry").html(data);
+                     showModal('#modalSellPastry');
+                }
+            })
+        }
+
         function deletePastry(pastryId){
          $.ajax({
             url: 'deletePastry/'+pastryId,

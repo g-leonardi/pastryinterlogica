@@ -1,5 +1,6 @@
-package giuseppe.leonardi.pasticceria.webapp.models;
+package giuseppe.leonardi.pasticceria.webapp.models.dao;
 
+import giuseppe.leonardi.pasticceria.webapp.models.Unit;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
