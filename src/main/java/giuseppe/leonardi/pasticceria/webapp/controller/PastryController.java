@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/pastry")
+@RequestMapping("/backend")
 public class PastryController {
     @Autowired
     private PastryService pastryService;
@@ -26,6 +26,7 @@ public class PastryController {
     @GetMapping({"/newPastry", "/editPastry"})
     public String getPastryModal(Model model, @RequestParam Optional<Long> pastryId){
         model.addAttribute("isNew", !pastryId.isPresent());
+        model.addAttribute("editMode", true);
         Pastry pastry = pastryId.isPresent() ?  pastryService.getPastry(pastryId.get()) : new Pastry();
         model.addAttribute("pastry", pastry);
         return "pastryModal";
@@ -34,7 +35,7 @@ public class PastryController {
     @PostMapping("/savePastry")
     public String savePastry(@ModelAttribute Pastry thePastry){
         pastryService.savePastry(thePastry);
-        return "redirect:/pastry/managePastry";
+        return "redirect:/backend/managePastry";
     }
 
     @DeleteMapping("/deletePastry/{pastryId}")
@@ -55,7 +56,7 @@ public class PastryController {
     @PostMapping("/saveRecipe")
     public String saveRecipe(@ModelAttribute Ingredient ingredient){
         pastryService.saveIngredient(ingredient);
-        return "redirect:/pastry/managePastry";
+        return "redirect:/backend/managePastry";
     }
 
     @DeleteMapping("/deleteIngredient/{ingredientId}")
@@ -76,7 +77,7 @@ public class PastryController {
     @PostMapping("/saveSellPastry")
     public String saveSellPastry(@ModelAttribute SellPastry sellPastry){
         pastryService.saveSellPastry(sellPastry);
-        return "redirect:/pastry/managePastry";
+        return "redirect:/backend/managePastry";
     }
 
 

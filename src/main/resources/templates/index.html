@@ -3,14 +3,14 @@
 
 <head lang="en">
     <meta charset="utf-8"/>
-    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta
             name="description"
             content="Web site created using spring init"
     />
-    <link rel="apple-touch-icon" th:href="@{/img/logo192.png}"/>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
     <title>La pasticceria di Luana e Maria</title>
     <script src="https://kit.fontawesome.com/c3da382ec3.js" crossorigin="anonymous"></script>
@@ -29,9 +29,9 @@
 
     <nav class="bakery-background navbar-fixed">
         <div class="myNavbar">
-            <a href="#" class="brand-logo">La pasticceria di Luana e Maria</a>
+            <a th:href="@{/}" class="brand-logo">La pasticceria di Luana e Maria</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a th:href="@{/pastry/managePastry}">Gestione dei Dolci</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/backend/managePastry}">Gestione dei Dolci</a></li>
                 <li><a th:href="@{/login}">Login</a></li>
             </ul>
         </div>
@@ -61,7 +61,9 @@
                                 <td th:text="${row.quantity}" />
                                 <td th:text="${row.price}"/>
                                 <td>
-                                    <a class="waves-effect waves-light btn red" th:onclick="|showRecipe(${row.pastryId});|">Elimina</a>
+                                    <a class="waves-effect waves-light btn green tooltipped" data-tooltip="Guarda la ricetta" th:onclick="|openPastryModal(${row.pastryId});|">
+                                        <i class="material-icons">view_list</i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>
@@ -75,20 +77,36 @@
             </div>
         </div>
     </div>
-
-    <div id="modalViewPastry" class="modal">
-    </div>
-
-
 </div>
-
+<div id="modalViewPastry" class="modal">
+</div>
 <script>
      $(document).ready(function(){
         $('.parallax').parallax();
         $('.sidenav').sidenav();
+        $('.modal').modal();
+        $('.tooltipped').tooltip();
       });
 
+       function showModal(modalId){
+                var m = M.Modal.getInstance($(modalId));
+                m.open();
+            }
 
+        function closeModal(modalId){
+            var m = M.Modal.getInstance($(modalId));
+            m.close();
+        }
+
+function openPastryModal(pastryId){
+            $.ajax({
+                url: "viewPastry?pastryId="+pastryId,
+                success: function(data){
+                     $("#modalViewPastry").html(data);
+                     showModal('#modalViewPastry');
+                }
+            })
+        }
 
 </script>
 

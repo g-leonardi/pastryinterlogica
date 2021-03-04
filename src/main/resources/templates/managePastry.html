@@ -3,14 +3,13 @@
 
 <head lang="en">
     <meta charset="utf-8" />
-    <link rel="icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
             name="description"
             content="Web site created using spring init"
     />
-    <link rel="apple-touch-icon" th:href="@{/img/logo192.png}" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>La pasticceria di Luana e Maria</title>
     <script src="https://kit.fontawesome.com/c3da382ec3.js" crossorigin="anonymous"></script>
@@ -29,9 +28,9 @@
 
     <nav class="bakery-background navbar-fixed">
         <div class="myNavbar">
-            <a href="#" class="brand-logo">La pasticceria di Luana e Maria</a>
+            <a th:href="@{/}" class="brand-logo">La pasticceria di Luana e Maria</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a th:href="@{/pastry/managePastry}">Gestione dei Dolci</a></li>
+                <li><a th:href="@{/backend/managePastry}">Gestione dei Dolci</a></li>
                 <li><a th:href="@{/login}">Login</a></li>
             </ul>
         </div>
@@ -61,10 +60,18 @@
                 <td th:text="${pastry.id}" />
                 <td th:text="${pastry.name}" />
                 <td>
-                    <a class="waves-effect waves-light btn blue" th:onclick="|openPastryModal('detail',${pastry.id});|">Modifica</a>
-                    <a class="waves-effect waves-light btn green" th:onclick="|openSellModal(${pastry.id});|">Metti in vendita</a>
-                    <a class="waves-effect waves-light btn blue" th:onclick="|openRecipeModal(${pastry.id});|">Aggiungi ingrediente</a>
-                    <a class="waves-effect waves-light btn red" th:onclick="|deletePastry(${pastry.id});|">Elimina</a>
+                    <a class="waves-effect waves-light btn blue tooltipped" data-tooltip="Modifica" th:onclick="|openPastryModal('detail',${pastry.id});|">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a class="waves-effect waves-light btn green tooltipped" data-tooltip="Metti in vendita" th:onclick="|openSellModal(${pastry.id});|">
+                        <i class="material-icons">free_breakfast</i>
+                    </a>
+                    <a class="waves-effect waves-light btn blue tooltipped" data-tooltip="Nuovo ingrediente" th:onclick="|openRecipeModal(${pastry.id});|">
+                        <i class="material-icons">add_to_photos</i>
+                    </a>
+                    <a class="waves-effect waves-light btn red tooltipped" data-tooltip="Elimina" th:onclick="|deletePastry(${pastry.id});|">
+                        <i class="material-icons">delete</i>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -151,6 +158,7 @@
      $(document).ready(function(){
         $('.sidenav').sidenav();
         $('.modal').modal();
+        $('.tooltipped').tooltip();
       });
 </script>
 
