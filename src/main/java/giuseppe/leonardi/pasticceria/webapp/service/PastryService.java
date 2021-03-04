@@ -54,6 +54,18 @@ public class PastryService {
     }
 
     public void saveSellPastry(SellPastry sellPastry) {
+        /*
+        Check if pastry is already selled.
+        If there is pastry older than one day, delete it and insert new, otherwise
+        increment quantity.
+         */
+        Optional<SellPastry> oldSellPastry = sellPastryRepository.findByPastry(sellPastry.getPastry());
+        if(oldSellPastry.isPresent()){
+            if(getDaysOld(oldSellPastry.get())==0){
+                sellPastry.setQuantity(sellPastry.getQuantity()+oldSellPastry.get().getQuantity());
+            }
+            sellPastryRepository.delete(oldSellPastry.get());
+        }
         sellPastryRepository.save(sellPastry);
     }
 
@@ -64,6 +76,25 @@ public class PastryService {
     }
 
     public double getPrice(SellPastry sellPastry) {
+        long daysBetween = getDaysOld(sellPastry);
+        if(daysBetween==0){
+            return sellPastry.getPrice();
+        }if(daysBetween==1){
+            return (sellPastry.getPrice()*4)/5;
+        }if(daysBetween==2){
+            return sellPastry.getPrice()/5;
+        }
+        return 0l;
+    }
+
+    private long getDaysOld(SellPastry sellPastry) {
+        LocalDate sellPastryDate = getSellPastryLocalDate(sellPastry);
+        LocalDate now = LocalDate.now();
+        long daysBetween = Period.between(sellPastryDate, now).getDays();
+        return daysBetween;
+    }
+
+    private LocalDate getSellPastryLocalDate(SellPastry sellPastry) {
         LocalDate sellPastryDate = null;
         if(sellPastry.getCreateDate() instanceof java.sql.Date){
             sellPastryDate = ((java.sql.Date) sellPastry.getCreateDate()).toLocalDate();
@@ -73,15 +104,6 @@ public class PastryService {
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
         }
-        LocalDate now = LocalDate.now();
-        long daysBetween = Period.between(sellPastryDate, now).getDays();
-        if(daysBetween==0){
-            return sellPastry.getPrice();
-        }if(daysBetween==1){
-            return (sellPastry.getPrice()*4)/5;
-        }if(daysBetween==2){
-            return sellPastry.getPrice()/5;
-        }
-        return 0l;
+        return sellPastryDate;
     }
 }
