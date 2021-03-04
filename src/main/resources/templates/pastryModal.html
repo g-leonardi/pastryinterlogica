@@ -2,7 +2,7 @@
     <h4  th:if="${editMode}" th:text="${isNew} ?'Nuovo Dolce' : 'Edita dolce'"></h4>
     <h4  th:unless="${editMode}">Visualizza dolce</h4>
     <div class="row">
-        <form id="pastry-form" th:object="${pastry}" method="post" name="pastryForm" th:action="@{/backend  /savePastry}"
+        <form id="pastry-form" th:object="${pastry}" method="post" name="pastryForm" th:action="@{/backend/savePastry}"
               class="col s12 needs-validation" novalidate="novalidate">
             <input type="hidden" id="id"  th:field="*{id}" th:value="*{id}"/>
             <div class="row">

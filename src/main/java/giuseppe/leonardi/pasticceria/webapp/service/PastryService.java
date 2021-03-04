@@ -9,13 +9,13 @@ import giuseppe.leonardi.pasticceria.webapp.repository.SellPastryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class PastryService {
@@ -64,9 +64,15 @@ public class PastryService {
     }
 
     public double getPrice(SellPastry sellPastry) {
-        LocalDate sellPastryDate = sellPastry.getCreateDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+        LocalDate sellPastryDate = null;
+        if(sellPastry.getCreateDate() instanceof java.sql.Date){
+            sellPastryDate = ((java.sql.Date) sellPastry.getCreateDate()).toLocalDate();
+        }
+        else{
+            sellPastryDate = (sellPastry.getCreateDate()).toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
+        }
         LocalDate now = LocalDate.now();
         long daysBetween = Period.between(sellPastryDate, now).getDays();
         if(daysBetween==0){

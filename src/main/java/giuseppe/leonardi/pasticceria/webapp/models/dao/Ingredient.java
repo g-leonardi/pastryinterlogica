@@ -11,21 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class Ingredient {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private long quantity;
     private Unit unit;
     @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Pastry parentPastry;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public Pastry getParentPastry() {
-        return parentPastry;
-    }
 }

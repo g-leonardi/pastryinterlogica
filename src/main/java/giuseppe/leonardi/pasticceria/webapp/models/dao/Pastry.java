@@ -13,19 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public class Pastry {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentPastry", fetch = FetchType.LAZY)
     private List<Ingredient> recipe;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentPastry", fetch = FetchType.LAZY)
-    public List<Ingredient> getRecipe() {
-        return recipe;
-    }
 }

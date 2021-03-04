@@ -11,26 +11,20 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class SellPastry {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int quantity;
     private double price;
     @CreationTimestamp
     @Temporal(TemporalType.DATE)
     private Date createDate;
+
+    @OneToOne
     private Pastry pastry;
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    @OneToOne
-    public Pastry getPastry() {
-        return pastry;
-    }
-
     @PrePersist
     public void onCreate(){ setCreateDate(new Date()); }
+
 }

@@ -43,6 +43,9 @@
             </div>
             <div class="section white">
                 <div class="row">
+                    <div th:unless="${rows!=null && !rows.empty}">
+                        <h2 class="center-align header">I dolci sono ancora in forno! Stiamo lavorando per voi...</h2>
+                    </div>
                     <div th:if="${rows!=null && !rows.empty}" style="margin-left: 50px">
                         <h2 class="header center-align">Le specialità di oggi</h2>
                         <table>
